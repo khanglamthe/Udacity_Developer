@@ -33,19 +33,19 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
-    res.send("try GET /filteredimage?image_url={{}}")
+  app.get( "/", async ( Request, Response ) => {
+    Response.send("try GET /filteredimage?image_url={{}}")
   } );
   
-  app.get("/filteredimage", async ( req, res )=>{
-    if(req.query.image_url == undefined)
-      res.send("Image not found");
-    let path = await filterImageFromURL(req.query.image_url);
+  app.get("/filteredimage", async ( Request, Response )=>{
+    if(Request.query.image_url == undefined)
+      Response.send("Image not found");
+    let path = await filterImageFromURL(Request.query.image_url);
 
-    res.sendFile(path, function(er){
-      if(er){
+    Response.sendFile(path, function(error){
+      if(error){
         console.log("success!");
-        res.status(500).send(er.message);
+        Response.status(500).send(error.message);
       }else{
         console.log("success!");
         let arr: string [] = [];
